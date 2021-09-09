@@ -12,9 +12,32 @@ const UserSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-            trim: true
+            match: [/.+@.+\..+/, 'Please enter a valid e-mail address']
         },
-        thoughts: [],
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Thought'
+            }
+        ],
         friends: []
+    },
+    {
+        toJSON: {
+          virtuals: true,
+          getters: true
+        },
+        id: false
     }
-)
+);
+
+// virtual that will include friend count upon user(s) query
+UserSchema.virtual('friendCount').get(function() {
+    return this.friends.length;
+});
+
+// create the User model using the UserSchema
+const User = model('User', UserSchema);
+
+// export the User model
+module.exports = User;
