@@ -1,30 +1,43 @@
 const router = require('express').Router();
 
 const {
+    getAllThought,
     addThought,
     removeThought,
     addReaction,
-    removeReaction
+    removeReaction,
+    getThoughtById
 } = require('../../controllers/thought-controller');
 
-// /api/comments/<pizzaId>
-// NOTE: this endpoint will add a comment to associated pizaa
+// /api/thoughts
 router
-    .route('/:pizzaId')
-    .post(addComment);
+    .route('/')
+    .get(getAllThought);
 
-// /api/comments/<pizzaId>/<commentId>
-// NOTE: this route will allow for deleting the comment itself, and removing its (the comment id) from the pizza's document
-router
-    .route('/:pizzaId/:commentId')
-    // we are using put below since we are updating a comment by adding a reply to it
-    .put(addReply)
-    .delete(removeComment)
 
-// /api/comments/<pizzaId>/<commentId>/<replyId>
-// NOTE: this route will allow us to delete a reply. We include both the comment and reply id since we need both in order to delete a reply... in other words, we are saying "Go to this pizza, then look at this particular comment, then delete this one reply."
 router
-    .route('/:pizzaId/:commentId/:replyId')
-    .delete(removeReply);
+    .route('/:thoughtId')
+    .get(getThoughtById)
+
+// /api/thoughts/<userId>
+// NOTE: this endpoint will allow a user to add a thought
+router
+    .route('/:userId')
+    .post(addThought);
+
+// /api/thoughts/<userId>/<thoughtId>
+// NOTE: this route will allow for deleting the thought itself, and removing its (the thought id) from the user's document
+router
+    .route('/:userId/:thoughtId')
+    // we are using put below since we are updating a thought by adding a reaction to it 
+    .get(getThoughtById)
+    .put(addReaction)
+    .delete(removeThought)
+
+// /api/thoughts/<userId>/<thoughtId>/<reactionId>
+// NOTE: this route will allow us to delete a reaction. We include both the thought and reaction id since we need both in order to delete a reaction... in other words, we are saying "Go to this user, then look at this particular thought, then delete this one reaction."
+router
+    .route('/:userId/:thoughtId/:reactionId')
+    .delete(removeReaction);
 
 module.exports = router;

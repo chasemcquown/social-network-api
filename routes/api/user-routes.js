@@ -22,12 +22,5 @@ router
   .put(updateUser)
   .delete(deleteUser);
 
-// Set up POST and DELETE at /api/users/:userId/friends/:friendId
-router
-  .route('/:id/friends/:id')
-  // below we are find a user and adding a friend to the user's friend array
-  .post(updateUser)
-  // below we are finding a user and removing a friend from the user's friend array
-  .delete(deleteFriend);
-
+// TODO: add methods to add and remove friends in user controller. Also, add routes to get and delete friends from user's friends array
 module.exports = router;
