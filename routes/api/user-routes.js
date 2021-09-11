@@ -6,6 +6,8 @@ const {
     getUserById,
     createUser,
     updateUser,
+    addFriend,
+    removeFriend,
     deleteUser
 } = require('../../controllers/user-controller');
 
@@ -22,5 +24,17 @@ router
   .put(updateUser)
   .delete(deleteUser);
 
-// TODO: add methods to add and remove friends in user controller. Also, add routes to get and delete friends from user's friends array
+
+// /api/users/friends/:userId
+router
+ .route('/friends/:userId')
+ .put(addFriend)
+
+
+// /api/users/friends/:userId/:friendId
+router
+ .route('/:userId/:friendId')
+ .delete(removeFriend)
+
+
 module.exports = router;
