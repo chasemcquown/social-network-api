@@ -4,6 +4,7 @@ const {
     getAllThought,
     addThought,
     removeThought,
+    updateThought,
     addReaction,
     removeReaction,
     getThoughtById
@@ -18,6 +19,7 @@ router
 router
     .route('/:thoughtId')
     .get(getThoughtById)
+    .put(updateThought)
 
 // /api/thoughts/<userId>
 // NOTE: this endpoint will allow a user to add a thought
